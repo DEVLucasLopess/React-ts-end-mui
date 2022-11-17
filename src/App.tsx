@@ -19,8 +19,9 @@ export const App = () => {
     //esse cara oferece o contexto pro React router doom funcionar;
     <AppThemeProvider>
       <BrowserRouter>
-        <MenuLateral/>
-        <AppRoutes/>
+        <MenuLateral>
+          <AppRoutes/>
+        </MenuLateral>
       </BrowserRouter>
     </AppThemeProvider>
   );
