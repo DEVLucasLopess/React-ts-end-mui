@@ -11,18 +11,21 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import { AppThemeProvider } from './shared/contexts/ThemeContext';
-
+import { AppThemeProvider, DrawerProvider } from './shared/contexts';
 
 export const App = () => {
   return (
     //esse cara oferece o contexto pro React router doom funcionar;
     <AppThemeProvider>
-      <BrowserRouter>
-        <MenuLateral>
-          <AppRoutes/>
-        </MenuLateral>
-      </BrowserRouter>
+      <DrawerProvider>
+
+        <BrowserRouter>
+          <MenuLateral>
+            <AppRoutes/>
+          </MenuLateral>
+        </BrowserRouter>
+        
+      </DrawerProvider>
     </AppThemeProvider>
   );
 }
