@@ -14,7 +14,37 @@ from "@mui/material";
 import React from "react";
 import './style.css';
 import { Box } from '@mui/system';
+
 import { useDrawerContext } from "../../contexts";
+import { Navigate, useMatch, useNavigate, useResolvedPath } from "react-router-dom";
+
+interface IListItemLinkProps {
+    to: string; 
+    icon: string;
+    label: string;
+    onClick: (() => void) | undefined;
+}
+
+const ListItemLink: React.FC<IListItemLinkProps> = ({to, icon, label, onClick}) => {
+    const navigate = useNavigate();
+
+    const resolvedPath = useResolvedPath(to);
+    const match = useMatch({ path: resolvedPath.pathname, end: false });
+
+    const handleClick = () => {
+        navigate(to)
+        onClick?.();
+    }
+
+    return (
+        <ListItemButton selected={!!match} onClick={handleClick}>
+            <ListItemIcon>
+                <Icon className="icon-menu-desktop">home</Icon>
+            </ListItemIcon>
+            <ListItemText primary="Página inicial"></ListItemText>
+        </ListItemButton>
+    )
+} 
 
 type AppThemeProvider = {
     children: React.ReactNode;
@@ -27,7 +57,7 @@ export const MenuLateral: React.FC<AppThemeProvider> = ({children}) => {
     //processo de mediaQuery do Material-UI
     const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const { isDrawerOpen, toggleDrawerOpen } = useDrawerContext();
+    const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext();
 
     return (
         // variant serve pra dizer como queremos o menu lateral ... "quer ele permanente?" você "quer o persistente? ... persistente expande e poder se diminuido tbm.
@@ -49,12 +79,15 @@ export const MenuLateral: React.FC<AppThemeProvider> = ({children}) => {
                     {/* { flex vai ocupar todo o espaço disponivel } */}
                     <Box flex={1}>
                         <List component="nav">
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    <Icon className="icon-menu-desktop">home</Icon>
-                                </ListItemIcon>
-                                <ListItemText primary="Página inicial"></ListItemText>
-                            </ListItemButton>   
+                            { drawerOptions.map(drawerOption => (
+                                <ListItemLink
+                                    to={drawerOption.label}
+                                    key={drawerOption.path}
+                                    icon={drawerOption.path}
+                                    label={drawerOption.icon}
+                                    onClick={smDown ? toggleDrawerOpen : undefined}
+                                />
+                            ))}
                         </List>
                     </Box>
                 </Box>

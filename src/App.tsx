@@ -15,7 +15,11 @@ import { AppThemeProvider, DrawerProvider } from './shared/contexts';
 
 export const App = () => {
   return (
-    //esse cara oferece o contexto pro React router doom funcionar;
+    //esse cara oferece o contexto pro React router doom funcionar.
+    //"AppThemeProvider" é a configuração do thema claro e escuro.
+    //"DrawerProvider" configura o contexto.
+    //"BrowserRouter" que é as rotas;
+    //"MenuLateral" que é o menu propriamente dito.
     <AppThemeProvider>
       <DrawerProvider>
 
