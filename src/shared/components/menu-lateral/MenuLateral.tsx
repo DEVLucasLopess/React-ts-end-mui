@@ -15,8 +15,9 @@ import React from "react";
 import './style.css';
 import { Box } from '@mui/system';
 
-import { useDrawerContext } from "../../contexts";
+import { useDrawerContext, useAppThemeContext } from "../../contexts";
 import { Navigate, useMatch, useNavigate, useResolvedPath } from "react-router-dom";
+import { Label } from "@mui/icons-material";
 
 interface IListItemLinkProps {
     to: string; 
@@ -58,6 +59,7 @@ export const MenuLateral: React.FC<AppThemeProvider> = ({children}) => {
     const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
     const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext();
+    const { toggleTheme } = useAppThemeContext();
 
     return (
         // variant serve pra dizer como queremos o menu lateral ... "quer ele permanente?" você "quer o persistente? ... persistente expande e poder se diminuido tbm.
@@ -88,6 +90,19 @@ export const MenuLateral: React.FC<AppThemeProvider> = ({children}) => {
                                     onClick={smDown ? toggleDrawerOpen : undefined}
                                 />
                             ))}
+                        </List>
+                    </Box>
+
+                    <Box>
+                        <List component="nav">
+                           <ListItemButton onClick={toggleTheme}>
+                                <ListItemIcon>
+                                    <Icon>
+                                        dark_mode
+                                    </Icon>
+                                </ListItemIcon>
+                                <ListItemText primary="Alternar tema" />
+                           </ListItemButton>
                         </List>
                     </Box>
                 </Box>
